@@ -24,6 +24,11 @@ Milestone A boilerplate: a core heads-up no-limit poker engine without solving.
 - `include/poker/engine.hpp`: engine API
 - `src/poker_engine.cpp`: engine implementation
 - `src/main.cpp`: simulation smoke test
+- `src/api_server.cpp`: local HTTP API server around C++ engine
+- `ui/index.html`: clickable browser UI (human vs random)
+- `ui/engine-api.js`: browser API client for `http://localhost:8080`
+- `ui/app.js`: UI rendering + click handlers
+- `ui/styles.css`: UI styling
 
 ## Build and run
 
@@ -41,6 +46,36 @@ cmake --build build
 clang++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/main.cpp src/poker_engine.cpp -o poker_solver
 ./poker_solver
 ```
+
+## Clickable UI
+
+Start the C++ API server (terminal 1):
+
+```bash
+./build/poker_api_server
+```
+
+Serve UI files (terminal 2):
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open:
+
+- `http://localhost:8000/ui/`
+
+Notes:
+
+- Uses card images from `asset/`.
+- UI calls the C++ server API directly (no duplicated engine rules in JS).
+- API endpoints:
+  - `POST /new_hand`
+  - `GET /state`
+  - `GET /legal_actions`
+  - `POST /apply_action` with JSON body `{\"index\": <number>}`
+  - `POST /apply_random_action`
+  - `GET /terminal_result`
 
 ## Current limitations
 

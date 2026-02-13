@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# CMake / build outputs
+/build/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+CMakeFiles/
+
+# Local binaries
+/poker_solver
+/poker_api_server
+
+# Generic build artifacts
+*.o
+*.obj
+*.so
+*.dylib
+*.a
+*.out
+
+# Logs
+*.log

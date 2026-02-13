@@ -1,0 +1,153 @@
+:root {
+  --felt: #165c3f;
+  --felt-deep: #0f3b2a;
+  --line: #f2d58a;
+  --panel: #f5f1e8;
+  --text: #191714;
+  --muted: #6a6155;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 10%, #2f8a61 0%, transparent 35%),
+    radial-gradient(circle at 80% 85%, #246f4f 0%, transparent 40%),
+    linear-gradient(160deg, var(--felt) 0%, var(--felt-deep) 90%);
+  min-height: 100vh;
+}
+
+.app {
+  width: min(1100px, 96vw);
+  margin: 20px auto;
+  padding: 16px;
+  border: 2px solid rgba(242, 213, 138, 0.5);
+  border-radius: 16px;
+  background: rgba(8, 25, 18, 0.4);
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #fff7e1;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+button,
+select {
+  border: 1px solid #3f3a2e;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.96);
+}
+
+.status,
+.actions,
+.history,
+.board-wrap,
+.player {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.meta {
+  color: var(--muted);
+  margin: 8px 0;
+  font-size: 0.95rem;
+}
+
+.card-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 90px;
+}
+
+.card {
+  width: 58px;
+  height: 84px;
+  border-radius: 8px;
+  border: 1px solid #b9aa8f;
+  background: #fff;
+  object-fit: cover;
+}
+
+.card.back {
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(45deg, #9f2222 0, #9f2222 6px, #7e1717 6px, #7e1717 12px);
+  color: #fff;
+  font-weight: 700;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.prompt {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.prompt-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.next-hand {
+  display: none;
+  background: #f2d58a;
+  font-weight: 700;
+}
+
+#history-log {
+  margin: 8px 0 0;
+  max-height: 250px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  .players {
+    grid-template-columns: 1fr;
+  }
+}

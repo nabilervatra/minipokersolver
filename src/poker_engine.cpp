@@ -20,9 +20,11 @@ int suit_of(int card) {
 
 int pack_score(int category, const std::vector<int>& kickers_desc) {
     // Category in [0..8], larger is better.
-    // Pack as base-15 number: category then kickers.
+    // Pack as fixed-width base-15 number: category then exactly 5 kicker slots.
+    // Fixed width is required so category always dominates cross-category compares.
     int score = category;
-    for (int k : kickers_desc) {
+    for (int i = 0; i < 5; ++i) {
+        const int k = i < static_cast<int>(kickers_desc.size()) ? kickers_desc[static_cast<std::size_t>(i)] : 0;
         score = score * 15 + k;
     }
     return score;
@@ -296,6 +298,19 @@ bool Engine::apply_action(State& state, const Action& action) {
     state.history.push_back(action);
     const int p = action.player;
     const int opp = 1 - p;
+    const auto force_allin_showdown = [&]() {
+        if (!state.folded[0] && !state.folded[1] && (state.stacks[0] == 0 || state.stacks[1] == 0)) {
+            deal_remaining_board(state);
+            state.street = Street::Terminal;
+            state.to_act = 0;
+            state.bet_to_call = 0;
+            state.current_bet = 0;
+            state.last_bet_size = 0;
+            state.committed_this_round = {0, 0};
+            return true;
+        }
+        return false;
+    };
 
     if (action.type == ActionType::Fold) {
         state.folded[p] = true;
@@ -304,6 +319,9 @@ bool Engine::apply_action(State& state, const Action& action) {
     }
 
     if (action.type == ActionType::Check) {
+        if (force_allin_showdown()) {
+            return true;
+        }
         if (is_round_closed(state) && state.history.size() >= 2 && state.history[state.history.size() - 2].street == state.street) {
             advance_street(state);
             if (state.street == Street::Showdown) {
@@ -323,6 +341,10 @@ bool Engine::apply_action(State& state, const Action& action) {
         state.committed_total[p] += put;
         state.pot += put;
         state.bet_to_call = std::max(0, state.current_bet - state.committed_this_round[opp]);
+
+        if (force_allin_showdown()) {
+            return true;
+        }
 
         if (is_round_closed(state)) {
             advance_street(state);
@@ -349,6 +371,10 @@ bool Engine::apply_action(State& state, const Action& action) {
         state.current_bet = std::max(state.current_bet, new_bet);
         state.last_bet_size = std::max(1, state.current_bet - prior_current);
         state.bet_to_call = std::max(0, state.current_bet - state.committed_this_round[opp]);
+
+        if (force_allin_showdown()) {
+            return true;
+        }
 
         (void)prev_commit;
         state.to_act = opp;

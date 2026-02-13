@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker Solver UI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <h1>Poker Solver Playground</h1>
+      <div class="controls">
+        <label for="human-player">You play:</label>
+        <select id="human-player">
+          <option value="0">Player 0 (SB)</option>
+          <option value="1">Player 1 (BB)</option>
+        </select>
+        <button id="new-hand">New Hand</button>
+      </div>
+    </header>
+
+    <section class="status" id="status"></section>
+
+    <section class="board-wrap">
+      <h2>Board</h2>
+      <div id="board" class="card-row"></div>
+    </section>
+
+    <section class="players">
+      <article class="player" id="player-0-panel">
+        <h3>Player 0</h3>
+        <div id="player-0-meta" class="meta"></div>
+        <div id="player-0-cards" class="card-row"></div>
+      </article>
+      <article class="player" id="player-1-panel">
+        <h3>Player 1</h3>
+        <div id="player-1-meta" class="meta"></div>
+        <div id="player-1-cards" class="card-row"></div>
+      </article>
+    </section>
+
+    <section class="actions">
+      <h2>Actions</h2>
+      <div id="action-buttons" class="action-buttons"></div>
+      <div class="prompt-row">
+        <div id="prompt" class="prompt"></div>
+        <button id="next-hand" class="next-hand" type="button">New Hand</button>
+      </div>
+    </section>
+
+    <section class="history">
+      <h2>History</h2>
+      <pre id="history-log"></pre>
+    </section>
+  </main>
+
+  <script src="engine-api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
