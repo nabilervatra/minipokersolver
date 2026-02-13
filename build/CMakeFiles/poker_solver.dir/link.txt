@@ -1,0 +1,1 @@
+/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/poker_solver.dir/src/main.cpp.o CMakeFiles/poker_solver.dir/src/poker_engine.cpp.o -o poker_solver
