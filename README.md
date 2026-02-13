@@ -38,6 +38,7 @@ Milestone A boilerplate: a core heads-up no-limit poker engine without solving.
 cmake -S . -B build
 cmake --build build
 ./build/poker_solver
+./build/poker_solve
 ```
 
 ### Option 2: Direct clang++
@@ -45,7 +46,16 @@ cmake --build build
 ```bash
 clang++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/main.cpp src/poker_engine.cpp -o poker_solver
 ./poker_solver
+
+clang++ -std=c++17 -Wall -Wextra -Wpedantic -Iinclude src/tree_builder.cpp src/solve_main.cpp -o poker_solve
+./poker_solve
 ```
+
+## Solver Scaffold (Step 1 + 2)
+
+- `include/poker/tree.hpp`: strict betting abstraction + tree node/state types
+- `src/tree_builder.cpp`: deterministic game tree generator
+- `src/solve_main.cpp`: scaffold executable that builds the tree and prints node stats
 
 ## Clickable UI
 

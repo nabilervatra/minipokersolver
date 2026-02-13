@@ -19,10 +19,20 @@ add_executable(poker_api_server
 
 target_include_directories(poker_api_server PRIVATE include)
 
+add_executable(poker_solve
+    src/solve_main.cpp
+    src/tree_builder.cpp
+    src/tree_state_logic.cpp
+)
+
+target_include_directories(poker_solve PRIVATE include)
+
 if (MSVC)
     target_compile_options(poker_solver PRIVATE /W4)
     target_compile_options(poker_api_server PRIVATE /W4)
+    target_compile_options(poker_solve PRIVATE /W4)
 else()
     target_compile_options(poker_solver PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(poker_api_server PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(poker_solve PRIVATE -Wall -Wextra -Wpedantic)
 endif()
